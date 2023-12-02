@@ -1,69 +1,60 @@
-# Contador de Nucleotídeos em R
 
-Este repositório contém cinco scripts distintos em R para contar as ocorrências dos nucleotídeos A, C, G e T em uma sequência de DNA.
+# Contador de Nucleotídeos em Python
+
+Este documento contém cinco scripts distintos em Python para contar as ocorrências dos nucleotídeos A, C, G e T em uma sequência de DNA.
 
 ## Scripts
 
-Cada script abaixo oferece uma abordagem diferente para resolver o problema de contar nucleotídeos em uma cadeia de DNA.
+Abaixo estão as diferentes abordagens implementadas em Python para resolver o problema de contar nucleotídeos em uma cadeia de DNA.
 
-### Script 1: Usando a biblioteca stringr
+### Script 1: Usando a classe Counter do módulo collections
 
-```r
-library(stringr)
+```python
+from collections import Counter
 
-count_nucleotides_1 <- function(dna) {
-  a_count <- str_count(dna, "A")
-  c_count <- str_count(dna, "C")
-  g_count <- str_count(dna, "G")
-  t_count <- str_count(dna, "T")
-  return(c(A=a_count, C=c_count, G=g_count, T=t_count))
-}
+def count_nucleotides_1(dna):
+    counts = Counter(dna)
+    return counts['A'], counts['C'], counts['G'], counts['T']
 ```
 
-### Script 2: Usando gregexpr e length
+### Script 2: Usando um dicionário e um loop for
 
-```r
-count_nucleotides_2 <- function(dna) {
-  a_count <- length(unlist(gregexpr("A", dna))) - 1
-  c_count <- length(unlist(gregexpr("C", dna))) - 1
-  g_count <- length(unlist(gregexpr("G", dna))) - 1
-  t_count <- length(unlist(gregexpr("T", dna))) - 1
-  return(c(A=a_count, C=c_count, G=g_count, T=t_count))
-}
+```python
+def count_nucleotides_2(dna):
+    counts = {'A': 0, 'C': 0, 'G': 0, 'T': 0}
+    for nucleotide in dna:
+        counts[nucleotide] += 1
+    return counts['A'], counts['C'], counts['G'], counts['T']
 ```
 
-### Script 3: Usando table e strsplit
+### Script 3: Usando compreensão de lista
 
-```r
-count_nucleotides_3 <- function(dna) {
-  nucleotide_counts <- table(unlist(strsplit(dna, "")))
-  return(nucleotide_counts[c("A", "C", "G", "T")])
-}
+```python
+def count_nucleotides_3(dna):
+    return (dna.count('A'), dna.count('C'), dna.count('G'), dna.count('T'))
 ```
 
-### Script 4: Usando um loop for e um vetor de contagem
+### Script 4: Usando um loop manual e incrementação
 
-```r
-count_nucleotides_4 <- function(dna) {
-  counts <- c(A=0, C=0, G=0, T=0)
-  for (i in strsplit(dna, "")[[1]]) {
-    counts[i] <- counts[i] + 1
-  }
-  return(counts)
-}
+```python
+def count_nucleotides_4(dna):
+    a, c, g, t = 0, 0, 0, 0
+    for nucleotide in dna:
+        if nucleotide == 'A': a += 1
+        elif nucleotide == 'C': c += 1
+        elif nucleotide == 'G': g += 1
+        elif nucleotide == 'T': t += 1
+    return a, c, g, t
 ```
 
-### Script 5: Usando sapply para aplicar gregexpr e length
+### Script 5: Usando map e funções lambda
 
-```r
-count_nucleotides_5 <- function(dna) {
-  nucleotides <- c("A", "C", "G", "T")
-  counts <- sapply(nucleotides, function(n) length(unlist(gregexpr(n, dna))) - 1)
-  names(counts) <- nucleotides
-  return(counts)
-}
+```python
+def count_nucleotides_5(dna):
+    return tuple(map(lambda x: dna.count(x), 'ACGT'))
 ```
+
 
 ## Uso
 
-Para usar qualquer um dos scripts, primeiro carregue a função correspondente no seu ambiente R. Em seguida, chame a função com uma sequência de DNA como argumento para obter as contagens de cada nucleotídeo.
+Para utilizar qualquer um dos scripts, carregue primeiro a função desejada no seu ambiente Python. Em seguida, chame a função passando uma sequência de DNA como argumento para obter a contagem de cada nucleotídeo.
