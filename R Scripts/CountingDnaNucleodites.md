@@ -59,7 +59,7 @@ count_nucleotides_4 <- function(dna) {
 ```r
 count_nucleotides_5 <- function(dna) {
   nucleotides <- c("A", "C", "G", "T")
-  counts <- sapply(nucleotides, function(n) length(unlist(gregexpr(n, dna))) - 1)
+  counts <- sapply(nucleotides, function(n) length(unlist(gregexpr(n, dna))))
   names(counts) <- nucleotides
   return(counts)
 }
